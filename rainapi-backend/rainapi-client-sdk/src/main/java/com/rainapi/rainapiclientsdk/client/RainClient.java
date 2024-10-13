@@ -15,7 +15,7 @@ import static com.rainapi.rainapiclientsdk.utils.SignUtils.genSign;
 /**
  * 调用第三方接口的客户端
  *
- * @author yupi
+ * @author rain
  */
 public class RainClient {
 
