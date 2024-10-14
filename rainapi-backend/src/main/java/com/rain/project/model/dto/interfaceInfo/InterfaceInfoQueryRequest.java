@@ -39,6 +39,7 @@ public class InterfaceInfoQueryRequest extends PageRequest implements Serializab
      * 用户可能根据地址查询
      */
     private String url;
+
 //下面的都有可能
     /**
      * 请求头
