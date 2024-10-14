@@ -2,11 +2,13 @@ package com.rain.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.gson.Gson;
 import com.rain.project.annotation.AuthCheck;
 import com.rain.project.common.*;
 import com.rain.project.constant.CommonConstant;
 import com.rain.project.exception.BusinessException;
 import com.rain.project.model.dto.interfaceInfo.InterfaceInfoAddRequest;
+import com.rain.project.model.dto.interfaceInfo.InterfaceInfoInvokeRequest;
 import com.rain.project.model.dto.interfaceInfo.InterfaceInfoQueryRequest;
 import com.rain.project.model.dto.interfaceInfo.InterfaceInfoUpdateRequest;
 import com.rain.project.model.entity.InterfaceInfo;
@@ -267,5 +269,52 @@ public class InterfaceInfoController {
 
         return ResultUtils.success(res);
     }
+
+
+    /**
+     * 测试调用
+     *
+     * @param interfaceInfoInvokeRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/invoke")
+    // 这里给它新封装一个参数InterfaceInfoInvokeRequest
+    // 返回结果把对象发出去就好了，因为不确定接口的返回值到底是什么
+    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest,
+                                                    HttpServletRequest request) {
+        // 检查请求对象是否为空或者接口id是否小于等于0
+        if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 获取接口id
+        long id = interfaceInfoInvokeRequest.getId();
+        // 获取用户请求参数
+        String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
+        // 判断是否存在
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        // 检查接口状态是否为下线状态
+        if (oldInterfaceInfo.getStatus() == InterfaceInfoStatusEnum.OFFLINE.getValue()) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "接口已关闭");
+        }
+
+        // 获取用户的ak和sk，使用用户的身份去调用
+        User loginUser = userService.getLoginUser(request);
+        String accessKey = loginUser.getAccessKey();
+        String secretKey = loginUser.getSecretKey();
+
+        RainClient tempClient = new RainClient(accessKey, secretKey);
+
+        Gson gson = new Gson();
+        com.rainapi.rainapiclientsdk.model.User user = gson.fromJson(userRequestParams, com.rainapi.rainapiclientsdk.model.User.class);
+
+        String userNameByPost = tempClient.getUserNameByPost(user);
+
+        return ResultUtils.success(userNameByPost);
+    }
+
 
 }
