@@ -1,10 +1,10 @@
-package com.rain.project.model.entity;
+package com.rainapi.common.model.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 接口信息
