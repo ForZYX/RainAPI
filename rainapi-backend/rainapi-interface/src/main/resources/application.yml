@@ -2,8 +2,3 @@ server:
   port: 8123
   servlet:
     context-path: /api
-
-rainapi:
-  client:
-    access-key: rain
-    secret-key: 12345678
