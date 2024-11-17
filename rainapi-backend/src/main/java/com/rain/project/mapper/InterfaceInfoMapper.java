@@ -1,7 +1,7 @@
 package com.rain.project.mapper;
 
-import com.rain.project.model.entity.InterfaceInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.rainapi.common.model.entity.InterfaceInfo;
 
 /**
 * @author zyx

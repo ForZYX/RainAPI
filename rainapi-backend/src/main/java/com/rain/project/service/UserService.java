@@ -2,7 +2,7 @@ package com.rain.project.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.rain.project.model.entity.User;
+import com.rainapi.common.model.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 

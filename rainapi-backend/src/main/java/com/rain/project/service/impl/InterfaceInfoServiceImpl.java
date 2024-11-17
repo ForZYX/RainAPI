@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rain.project.common.ErrorCode;
 import com.rain.project.exception.BusinessException;
 import com.rain.project.mapper.InterfaceInfoMapper;
-import com.rain.project.model.entity.InterfaceInfo;
 import com.rain.project.service.InterfaceInfoService;
+import com.rainapi.common.model.entity.InterfaceInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.rain.project.service;
 
-import com.rain.project.model.entity.InterfaceInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.rainapi.common.model.entity.InterfaceInfo;
 
 /**
 * @author zyx

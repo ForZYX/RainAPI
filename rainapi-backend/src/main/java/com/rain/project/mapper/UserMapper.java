@@ -1,7 +1,7 @@
 package com.rain.project.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.rain.project.model.entity.User;
+import com.rainapi.common.model.entity.User;
 
 /**
  * @Entity com.rain.project.model.domain.User
