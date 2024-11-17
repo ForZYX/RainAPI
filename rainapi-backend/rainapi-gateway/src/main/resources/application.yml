@@ -1,0 +1,49 @@
+server:
+  port: 8090
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - AddResponseHeader=source, rainapi
+      routes:
+      # if match /api/*, forward it to uri
+      - id: api_name_route
+        uri: http://localhost:8123
+        predicates:
+        - Path=/api/**
+
+## application.yml
+#dubbo:
+#  registry:
+#    id: nacos-registry
+#    address: nacos://127.0.0.1:8848
+#	# This will enable application-level service discovery only (the recommended service discovery method for Dubbo3).
+#	# For users upgrading from Dubbo2.x, please set the value to 'all' for smooth migration.
+##    register-mode: instance
+#  protocol:
+#    name: dubbo
+#    port: 13512
+#  application:
+#    name: dubbo-springboot-demo-provider
+##    logger: slf4j
+
+
+dubbo:
+  registry:
+    address: nacos://${nacos.address:127.0.0.1}:8848
+#    register-mode: instance
+  protocol:
+    name: dubbo
+    port: 50055
+  application:
+    name: dubbo-springboot-demo-consumer
+    qosPort: 33333
+#    logger: slf4j
